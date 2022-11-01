@@ -19,7 +19,10 @@ const renderer = new THREE.WebGL1Renderer({
 
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
-camera.position.setZ(30);
+camera.position.setZ(-0.5);
+camera.position.setY(6);
+camera.position.setX(-2);
+camera.lookAt(-1.2,0,-1);
 
 renderer.render( scene, camera );
 /*
@@ -29,8 +32,10 @@ const torus = new THREE.Mesh( geometry, material );
 
 scene.add(torus);
 */
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(5,5,5);
+const pointLight = new THREE.PointLight(0xffffff, 2);
+pointLight.position.set(2.5,4,-1);
+pointLight.castShadow = true;
+
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
@@ -39,9 +44,9 @@ const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
 scene.add(lightHelper, gridHelper);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+//const controls = new OrbitControls(camera, renderer.domElement);
 
-function addStar(){
+/*function addStar(){
   const geometry = new THREE.SphereGeometry(0.25,24,24);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
   const star = new THREE.Mesh(geometry, material);
@@ -52,10 +57,9 @@ function addStar(){
   scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+Array(200).fill().forEach(addStar);*/
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
-scene.background = spaceTexture;
+
 
 /*moon
 const moonTexture = new THREE.TextureLoader().load('moonTexture.jpg');
@@ -73,16 +77,21 @@ scene.add(moon);*/
 
 const loader = new GLTFLoader();
 
-loader.load( 'onegoodthing\book.glb', function ( bookLayout ) {
+loader.load( 'book.glb', function ( bookLayout) {
 
-  const materialTwo = new THREE.MeshStandardMaterial( { color: 0xffffff} );
-  const bookFinal = new THREE.Mesh(bookLayout, materialTwo);
-  bookFinal.position.set(20,20,20);
-  bookFinal.setSize(20,20,20);
-	scene.add( bookFinal.scene );
+	scene.add( bookLayout.scene );
 
 
+
+}, undefined, function(error){
+  console.log("error: ",error);
 });
+
+
+
+
+//const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+//scene.background = spaceTexture;
 
 
 function animate() {
@@ -92,7 +101,7 @@ function animate() {
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;  
   */
-  controls.update();
+  //controls.update();
 
   renderer.render( scene, camera);
 
