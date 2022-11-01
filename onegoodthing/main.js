@@ -4,6 +4,10 @@ import * as THREE from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight);
@@ -18,13 +22,13 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 camera.position.setZ(30);
 
 renderer.render( scene, camera );
-
+/*
 const geometry = new THREE.TorusGeometry( 10, 3, 16, 100);
 const material = new THREE.MeshStandardMaterial( { color: 0xFF6347 } );
 const torus = new THREE.Mesh( geometry, material );
 
 scene.add(torus);
-
+*/
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(5,5,5);
 
@@ -53,7 +57,7 @@ Array(200).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
-//moon
+/*moon
 const moonTexture = new THREE.TextureLoader().load('moonTexture.jpg');
 const moonNormalTexture = new THREE.TextureLoader().load('moonNormal.jpg');
 
@@ -65,16 +69,29 @@ const moon = new THREE.Mesh(
   } )
 
 );
-scene.add(moon);
+scene.add(moon);*/
+
+const loader = new GLTFLoader();
+
+loader.load( 'onegoodthing\book.glb', function ( bookLayout ) {
+
+  const materialTwo = new THREE.MeshStandardMaterial( { color: 0xffffff} );
+  const bookFinal = new THREE.Mesh(bookLayout, materialTwo);
+  bookFinal.position.set(20,20,20);
+  bookFinal.setSize(20,20,20);
+	scene.add( bookFinal.scene );
+
+
+});
 
 
 function animate() {
   requestAnimationFrame( animate );
-
+  /*
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;  
-
+  */
   controls.update();
 
   renderer.render( scene, camera);
