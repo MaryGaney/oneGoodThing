@@ -20,9 +20,9 @@ const renderer = new THREE.WebGL1Renderer({
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 camera.position.setZ(-0.5);
-camera.position.setY(6);
-camera.position.setX(-2);
-camera.lookAt(-1.2,0,-1);
+//camera.position.setY(6);
+//camera.position.setX(-2);
+//camera.lookAt(-1.2,0,-1);
 
 renderer.render( scene, camera );
 /*
@@ -33,8 +33,8 @@ const torus = new THREE.Mesh( geometry, material );
 scene.add(torus);
 */
 const pointLight = new THREE.PointLight(0xffffff, 2);
-pointLight.position.set(2.5,4,-1);
-pointLight.castShadow = true;
+//pointLight.position.set(2.5,4,-1);
+//pointLight.castShadow = true;
 
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
@@ -44,20 +44,28 @@ const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
 scene.add(lightHelper, gridHelper);
 
-//const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
-/*function addStar(){
+
+//() => THREE.MathUtils.randFloatSpread(100)
+function addStar(){
+
   const geometry = new THREE.SphereGeometry(0.25,24,24);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
   const star = new THREE.Mesh(geometry, material);
+  for(count = 0; count >= -31; count--){
+    const[x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    //const x = 0;
+    //let y = count;
+    //const z = 0;
 
-  const[x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    star.position.set(x,y,z);
 
-  star.position.set(x,y,z);
-  scene.add(star);
+      scene.add(star);
+      
+  }
 }
-
-Array(200).fill().forEach(addStar);*/
+Array(30).fill().forEach(addStar);
 
 
 
@@ -75,7 +83,7 @@ const moon = new THREE.Mesh(
 );
 scene.add(moon);*/
 
-const loader = new GLTFLoader();
+/*const loader = new GLTFLoader();
 
 loader.load( 'book.glb', function ( bookLayout) {
 
@@ -85,7 +93,7 @@ loader.load( 'book.glb', function ( bookLayout) {
 
 }, undefined, function(error){
   console.log("error: ",error);
-});
+}); */
 
 
 
@@ -101,7 +109,7 @@ function animate() {
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;  
   */
-  //controls.update();
+  controls.update();
 
   renderer.render( scene, camera);
 
