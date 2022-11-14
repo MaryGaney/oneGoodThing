@@ -46,26 +46,52 @@ scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+function countdown(startNumber, endNumber){
+  let newArray = [];
+  for(let count = startNumber; count <= endNumber; count++){
+      let numberSend = count;
+      //console.log(numberSend);
+      //console.log(count);
+      newArray.push(numberSend)
+      //return numberSend;
+  }
+  return newArray;
+}
+
+
+function returnZero(wantNumber, repeats){
+  let newArray = [];
+  for(let count = 0; count <= repeats; count++){
+    let numberSend = wantNumber;
+    newArray.push(numberSend)
+  }
+  return newArray;
+}
+
 
 //() => THREE.MathUtils.randFloatSpread(100)
+//.map(() => THREE.MathUtils.pingpong(0,-31))
+//.map(() => THREE.MathUtils.lerp(1,10))
 function addStar(){
 
   const geometry = new THREE.SphereGeometry(0.25,24,24);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
   const star = new THREE.Mesh(geometry, material);
-  for(count = 0; count >= -31; count--){
-    const[x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
-    //const x = 0;
-    //let y = count;
-    //const z = 0;
 
-    star.position.set(x,y,z);
 
-      scene.add(star);
-      
+  const[x] = Array(1).fill().map(() => returnZero(0,31));
+  console.log(x);
+  const[y] = Array(1).fill().map(() => countdown(0,31));
+  console.log(y);
+  const[z] = Array(1).fill().map(() => returnZero(0,31));
+  console.log(z);
+  for(let count = 0; count <= 31; count++){
+    star.position.set(x[count],y[count],z[count]);
+
+    scene.add(star);
   }
 }
-Array(30).fill().forEach(addStar);
+Array(1).fill().forEach(addStar);
 
 
 
@@ -98,6 +124,7 @@ loader.load( 'book.glb', function ( bookLayout) {
 
 
 
+
 //const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 //scene.background = spaceTexture;
 
@@ -109,6 +136,7 @@ function animate() {
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;  
   */
+ 
   controls.update();
 
   renderer.render( scene, camera);
