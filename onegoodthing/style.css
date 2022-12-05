@@ -1,9 +1,104 @@
-canvas{
+#bg{
   position: fixed;
+
   top: 0;
   left: 0;
+  z-index:-1;
 }
 
-main{
+#main{
   position:absolute;
+  height:auto;
+  width:auto;
+  z-index:1;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+/* the main index page*/
+.buttons{
+  opacity: 75%;
+}
+
+#displayStars {
+  opacity:100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+
+
+  cursor: pointer;
+  display: inline-flex;
+  line-height: 1.25;
+
+  margin-left:35%;
+  padding:1%;
+
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+}
+
+#displayStars:hover,
+#displayStars:focus {
+  color:white;
+  
+}
+
+#displayStars:hover {
+  transform: translateY(-1px);
+}
+
+#displayStars:active {
+  color: white;
+  transform: translateY(0);
+}
+
+
+#displayNotebook {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  display: inline-flex;
+  line-height: 1.25;
+  padding:1%;
+
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+}
+
+#displayNotebook:hover,
+#displayNotebook:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: white;
+}
+
+#displayNotebook:hover {
+  transform: translateY(-1px);
+}
+
+#displayNotebook:active {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: white;
+  transform: translateY(0);
 }

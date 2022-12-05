@@ -6,7 +6,19 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-
+//how to pull from local storage, eventually, we'll use user info
+//let daysOpened = JSON.parse(localStorage.getItem('daysClicked'));
+//reset the calendar, use this for resetting the notebook
+/*function resetCalendar(){
+  //only reset if they say yes to a prompt
+  const answer = confirm('Are you sure you want to reset your calendar? This action cannot be undone.');
+  if (answer){
+    //this will clear all items in local storage
+    localStorage.clear();
+    //reload the page
+    document.location.reload();
+  }
+}//end of reset calendar*/
 
 const scene = new THREE.Scene();
 
@@ -19,19 +31,11 @@ const renderer = new THREE.WebGL1Renderer({
 
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
-camera.position.setZ(-0.5);
-//camera.position.setY(6);
-//camera.position.setX(-2);
+
 //camera.lookAt(-1.2,0,-1);
 
 renderer.render( scene, camera );
-/*
-const geometry = new THREE.TorusGeometry( 10, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial( { color: 0xFF6347 } );
-const torus = new THREE.Mesh( geometry, material );
 
-scene.add(torus);
-*/
 const pointLight = new THREE.PointLight(0xffffff, 2);
 //pointLight.position.set(2.5,4,-1);
 //pointLight.castShadow = true;
@@ -46,6 +50,46 @@ scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+/*
+const loader = new FontLoader();
+
+const helvetiker = loader.load(
+	// resource URL
+	'fonts/helvetiker_bold.typeface.json',
+
+	// onLoad callback
+	function ( helvetiker ) {
+		// do something with the font
+		console.log( helvetiker );
+	},
+
+	// onProgress callback
+	function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+
+	// onError callback
+	function ( err ) {
+		console.log( 'An error happened' );
+	}
+);
+
+loader.load( 'fonts/helvetiker_regular.typeface.json', function ( helvetiker ) {
+
+	const firstText = new TextGeometry( 'Hello three.js!', {
+		font: helvetiker,
+		size: 80,
+		height: 5,
+		curveSegments: 12,
+		bevelEnabled: true,
+		bevelThickness: 10,
+		bevelSize: 8,
+		bevelOffset: 0,
+		bevelSegments: 5
+	} );
+} );
+*/
+
 function countdown(startNumber, endNumber){
   let newArray = [];
   for(let count = startNumber; count <= endNumber; count++){
@@ -58,7 +102,6 @@ function countdown(startNumber, endNumber){
   return newArray;
 }
 
-
 function returnZero(wantNumber, repeats){
   let newArray = [];
   for(let count = 0; count <= repeats; count++){
@@ -69,57 +112,143 @@ function returnZero(wantNumber, repeats){
 }
 
 
-//() => THREE.MathUtils.randFloatSpread(100)
-//.map(() => THREE.MathUtils.pingpong(0,-31))
-//.map(() => THREE.MathUtils.lerp(1,10))
+//JUST FYI THIS FUNCTION IS NOT DONE DO. NOT. CALL. IT.
+
+let count = 0;
+
 function addStar(){
 
-  const geometry = new THREE.SphereGeometry(0.25,24,24);
+  const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  const geometry = new THREE.SphereGeometry(0.25,27,27);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
-  const star = new THREE.Mesh(geometry, material);
-
-
-  const[x] = Array(1).fill().map(() => returnZero(0,31));
-  console.log(x);
-  const[y] = Array(1).fill().map(() => countdown(0,31));
-  console.log(y);
-  const[z] = Array(1).fill().map(() => returnZero(0,31));
-  console.log(z);
-  for(let count = 0; count <= 31; count++){
-    star.position.set(x[count],y[count],z[count]);
-
-    scene.add(star);
+  /*
+  let monthStarArrayOriginal = [];
+  function createMonthStar(monthStarArray){
+    for(let monthName = 0; monthName < Months.length; monthName++){
+      Months[monthName] = new THREE.Mesh(geometry, material);
+      monthStarArray.push(Months[monthName]);
+    }
+    console.log(monthStarArray);
+    return monthStarArray;
   }
+
+  const Numbers = ["zeros", "ones", "twos", "threes", "fours", "fives", "sixes", "sevens", "eights", "nines", "tens", "elevens"];
+  let starNumberArrayOriginal = [];
+function createArrays(starNumberArray){
+
+  for(let countUp = 0; countUp < 44;){
+    for(let goThrough = 0; goThrough < Numbers.length; goThrough++){
+
+
+        Numbers[goThrough] = Array(1).fill().map(() => returnZero(countUp,31));
+        starNumberArray.push(Numbers[goThrough]);
+        countUp +=4;
+    }
+      console.log(starNumberArray);
+  }
+  return starNumberArray;
 }
-Array(1).fill().forEach(addStar);
+
+    
+
+  const[toThirty] = Array(1).fill().map(() => countdown( -4,26));
+  const[toTwentyNine] = Array(1).fill().map(() => countdown( -4,24));
+  
+
+  createMonthStar(monthStarArrayOriginal);
+  createArrays(starNumberArrayOriginal);
+
+  for(let combineAll = 0; combineAll < 13; combineAll++){
+    monthStarArrayOriginal[combineAll].position.set(starNumberArrayOriginal[combineAll], toThirtyOne[combineAll], starNumberArrayOriginal[combineAll]);
+  }
+
+*/
+
+
+  const starJan = new THREE.Mesh(geometry, material);
 
 
 
-/*moon
-const moonTexture = new THREE.TextureLoader().load('moonTexture.jpg');
-const moonNormalTexture = new THREE.TextureLoader().load('moonNormal.jpg');
+  const[zeros] = Array(1).fill().map(() => returnZero(0,31));
+  
 
-const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
-  new THREE.MeshStandardMaterial( {
-    map: moonTexture,
-    normalMap: moonNormalTexture
-  } )
+  const[toThirtyOne] = Array(1).fill().map(() => countdown(-4,27));
 
-);
-scene.add(moon);*/
+  starJan.position.set(zeros[count],toThirtyOne[count],zeros[count]);
+  /*
+  starFeb.position.set(ones[count], toTwentyNine[count], zeros[count]);
+  starMar.position.set(twos[count], toThirtyOne[count], zeros[count]);
+  starApr.position.set(threes[count], toThirty[count], zeros[count]);
+  starMay.position.set(fours[count], toThirtyOne[count], zeros[count]);
+  starJun.position.set(fives[count], toThirty[count], zeros[count]);
+  starJul.position.set(sixes[count], toThirtyOne[count], zeros[count]);
+  starAug.position.set(sevens[count], toThirtyOne[count], zeros[count]);
+  starSept.position.set(eights[count], toThirty[count], zeros[count]);
+  starOct.position.set(nines[count], toThirtyOne[count], zeros[count]);
+  starNov.position.set(tens[count], toThirty[count], zeros[count]);
+  starDec.position.set(elevens[count], toThirtyOne[count], zeros[count]);
+  */
+  scene.add(starJan);
+  /*
+  scene.add(starFeb);
+  scene.add(starMar);
+  scene.add(starApr);
+  scene.add(starMay);
+  scene.add(starJun);
+  scene.add(starJul);
+  scene.add(starAug);
+  scene.add(starSept);
+  scene.add(starOct);
+  scene.add(starNov);
+  scene.add(starDec);
+  */
+ count++;
+}
 
-/*const loader = new GLTFLoader();
+function clearTheStage(){
+  location.reload();
+}
 
-loader.load( 'book.glb', function ( bookLayout) {
+function populateStars(){
+  camera.position.setZ(-40);
+  camera.position.setY(20);
+  camera.position.setX(3);
+  camera.lookAt(-2,1,1);
+  console.log("it's working");
+  let allTheStars = Array(31).fill().forEach(addStar);
+}
 
-	scene.add( bookLayout.scene );
+function loadNotebook(){
+
+  allTheStars.dispose();
+
+  const loader = new GLTFLoader();
+  pointLight.position.set(2.5,4,-1);
+  pointLight.castShadow = true;
+  camera.position.setZ(2.5);
+  camera.position.setY(4);
+  camera.position.setX(-1);
+  camera.lookAt(0,0,0);
+
+  loader.load( 'book.glb', function ( bookLayout) {
+  
+    scene.add( bookLayout.scene );
+  
+
+  
+  }, undefined, function(error){
+    console.log("error: ",error);
+  }); 
+}
+
+const starButton = document.getElementById("displayStars");
+const notebookButton = document.getElementById("displayNotebook");
 
 
+starButton.addEventListener('click', populateStars);
+notebookButton.addEventListener('click', loadNotebook);
 
-}, undefined, function(error){
-  console.log("error: ",error);
-}); */
+
 
 
 
@@ -131,11 +260,6 @@ loader.load( 'book.glb', function ( bookLayout) {
 
 function animate() {
   requestAnimationFrame( animate );
-  /*
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.005;
-  torus.rotation.z += 0.01;  
-  */
  
   controls.update();
 
