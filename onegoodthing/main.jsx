@@ -20,34 +20,46 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   }
 }//end of reset calendar*/
 
+//create the scene (background that holds everything)
 const scene = new THREE.Scene();
 
+//create the camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight);
 
+//create the renderer
 const renderer = new THREE.WebGL1Renderer({
   canvas: document.querySelector('#bg'),
 
 });
 
+//renderer automatically adjusts to device window
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 
 //camera.lookAt(-1.2,0,-1);
 
+//add the background that holds everything and the camera
 renderer.render( scene, camera );
 
+//create lighting
 const pointLight = new THREE.PointLight(0xffffff, 2);
+const ambientLight = new THREE.AmbientLight(0xffffff);
 //pointLight.position.set(2.5,4,-1);
 //pointLight.castShadow = true;
 
-
-const ambientLight = new THREE.AmbientLight(0xffffff);
+//add the lights to the scene
 scene.add(pointLight, ambientLight);
 
+//adds a box to show where the camera is
+const helper = new THREE.CameraHelper( camera );
+scene.add( helper );
+
+//adds a box to show where the light is and adds the grid
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
 scene.add(lightHelper, gridHelper);
 
+//allows for movement in the scene
 const controls = new OrbitControls(camera, renderer.domElement);
 
 /*
@@ -90,18 +102,20 @@ loader.load( 'fonts/helvetiker_regular.typeface.json', function ( helvetiker ) {
 } );
 */
 
+//takes in a start number and counts from the starting number to the ending number
+//adding all of the numbers from the start number to the end number in the array
 function countdown(startNumber, endNumber){
   let newArray = [];
   for(let count = startNumber; count <= endNumber; count++){
       let numberSend = count;
-      //console.log(numberSend);
-      //console.log(count);
       newArray.push(numberSend)
-      //return numberSend;
   }
   return newArray;
 }
 
+//returns an array full of however many amount of the wanted number (repeats)
+//this is to help with calendar view so that the x and z will stay the same but
+//the y will change
 function returnZero(wantNumber, repeats){
   let newArray = [];
   for(let count = 0; count <= repeats; count++){
@@ -113,19 +127,20 @@ function returnZero(wantNumber, repeats){
 
 
 //JUST FYI THIS FUNCTION IS NOT DONE DO. NOT. CALL. IT.
-
+//count is the number of times this function has gone through
 let count = 0;
-
-function addStar(){
+/*
+function addStarOrdered(){
 
   const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
   const geometry = new THREE.SphereGeometry(0.25,27,27);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
-  /*
+  
   let monthStarArrayOriginal = [];
   function createMonthStar(monthStarArray){
     for(let monthName = 0; monthName < Months.length; monthName++){
       Months[monthName] = new THREE.Mesh(geometry, material);
+
       monthStarArray.push(Months[monthName]);
     }
     console.log(monthStarArray);
@@ -134,45 +149,41 @@ function addStar(){
 
   const Numbers = ["zeros", "ones", "twos", "threes", "fours", "fives", "sixes", "sevens", "eights", "nines", "tens", "elevens"];
   let starNumberArrayOriginal = [];
-function createArrays(starNumberArray){
+  function createArrays(starNumberArray){
 
-  for(let countUp = 0; countUp < 44;){
-    for(let goThrough = 0; goThrough < Numbers.length; goThrough++){
+    for(let countUp = 0; countUp < 44;){
+      for(let goThrough = 0; goThrough < Numbers.length; goThrough++){
 
 
-        Numbers[goThrough] = Array(1).fill().map(() => returnZero(countUp,31));
-        starNumberArray.push(Numbers[goThrough]);
-        countUp +=4;
+          Numbers[goThrough] = Array(1).fill().map(() => returnZero(countUp,31));
+          starNumberArray.push(Numbers[goThrough]);
+          countUp +=4;
+      }
+        console.log(starNumberArray);
     }
-      console.log(starNumberArray);
+    return starNumberArray;
   }
-  return starNumberArray;
-}
 
     
 
   const[toThirty] = Array(1).fill().map(() => countdown( -4,26));
   const[toTwentyNine] = Array(1).fill().map(() => countdown( -4,24));
   
-
   createMonthStar(monthStarArrayOriginal);
   createArrays(starNumberArrayOriginal);
+  
+  const[toThirtyOne] = Array(1).fill().map(() => countdown(-4,27));
 
   for(let combineAll = 0; combineAll < 13; combineAll++){
     monthStarArrayOriginal[combineAll].position.set(starNumberArrayOriginal[combineAll], toThirtyOne[combineAll], starNumberArrayOriginal[combineAll]);
   }
-
-*/
-
 
   const starJan = new THREE.Mesh(geometry, material);
 
 
 
   const[zeros] = Array(1).fill().map(() => returnZero(0,31));
-  
 
-  const[toThirtyOne] = Array(1).fill().map(() => countdown(-4,27));
 
   starJan.position.set(zeros[count],toThirtyOne[count],zeros[count]);
   /*
@@ -188,8 +199,9 @@ function createArrays(starNumberArray){
   starNov.position.set(tens[count], toThirty[count], zeros[count]);
   starDec.position.set(elevens[count], toThirtyOne[count], zeros[count]);
   */
+ /*
   scene.add(starJan);
-  /*
+  
   scene.add(starFeb);
   scene.add(starMar);
   scene.add(starApr);
@@ -202,25 +214,95 @@ function createArrays(starNumberArray){
   scene.add(starNov);
   scene.add(starDec);
   */
- count++;
+/*
+
+
+}
+*/
+
+//this is the number of days in each month - 1 (to account for 0)
+//eventually I'll just the date and time automatically, but I wanted to wait and see if the actual function
+//worked first
+const Months = [[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+];
+
+//this adds the dimensions and color for each star
+const geometry = new THREE.SphereGeometry(0.25,27,27);
+const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
+
+//this is the array of stars that need to be added to the scene
+let monthStarArrayOriginal = [];
+
+function createMonthStar(monthStarArray){
+  for(let monthName = 0; monthName < Months.length; monthName++){
+    console.log("does this even repeat??");
+    for(let monthDayNumber = 0; monthDayNumber < Months[monthName].length; monthDayNumber++){
+      Months[monthName[monthDayNumber]] = new THREE.Mesh(geometry, material);
+
+      monthStarArray.push(Months[monthName[monthDayNumber]]);
+      console.log("see if this works");
+    }
+    console.log(monthStarArray);
+
+  }
+  return monthStarArray;
 }
 
-function clearTheStage(){
-  location.reload();
+createMonthStar(monthStarArrayOriginal);
+
+//starGalaxyCount counts the number of times the galaxy display is used 
+let starGalaxyCount = 0;
+function addStarGalaxy(arrayOfMonths){
+  //console.log("we got through");
+
+  const[x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  //arrayOfMonths[starGalaxyCount].position.set(THREE.MathUtils.randFloatSpread(100),THREE.MathUtils.randFloatSpread(100),THREE.MathUtils.randFloatSpread(100));
+  arrayOfMonths[starGalaxyCount].position.set(x,y,z);
+    //console.log("this part is working");
+    scene.add(arrayOfMonths[starGalaxyCount]);
+  starGalaxyCount++;
 }
 
-function populateStars(){
+//this function moves the camera and adds the stars to the scene in an array of 12 for the 12 months
+//this handles the galaxy order
+function populateStarsGalaxy(){
   camera.position.setZ(-40);
   camera.position.setY(20);
   camera.position.setX(3);
   camera.lookAt(-2,1,1);
   console.log("it's working");
-  let allTheStars = Array(31).fill().forEach(addStar);
+  for(let x = 0; x < monthStarArrayOriginal.length; x++){
+    Array(12).fill(addStarGalaxy(monthStarArrayOriginal));
+  }
 }
+
+//this function moves the camera and adds the stars to the scene in an array of 12 for the 12 months
+//this handles the calendar order
+/*function populateStarsOrdered(){
+  camera.position.setZ(-40);
+  camera.position.setY(20);
+  camera.position.setX(3);
+  camera.lookAt(-2,1,1);
+  console.log("it's working");
+  let allTheStars = Array(12).fill().forEach(addStarOrdered);
+}
+*/
+
+//this function moves the camera, moves the light, and adds a new loader which will add the notebook
 
 function loadNotebook(){
 
-  allTheStars.dispose();
 
   const loader = new GLTFLoader();
   pointLight.position.set(2.5,4,-1);
@@ -231,7 +313,6 @@ function loadNotebook(){
   camera.lookAt(0,0,0);
 
   loader.load( 'book.glb', function ( bookLayout) {
-  
     scene.add( bookLayout.scene );
   
 
@@ -241,11 +322,12 @@ function loadNotebook(){
   }); 
 }
 
+//these are the two variables for the "display my stars" and "display my notebook" button
 const starButton = document.getElementById("displayStars");
 const notebookButton = document.getElementById("displayNotebook");
 
-
-starButton.addEventListener('click', populateStars);
+//when the buttons are clicked they run their specific functions that load in the stars or notebook
+starButton.addEventListener('click', populateStarsGalaxy);
 notebookButton.addEventListener('click', loadNotebook);
 
 
@@ -257,7 +339,7 @@ notebookButton.addEventListener('click', loadNotebook);
 //const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 //scene.background = spaceTexture;
 
-
+//this function runs the scene
 function animate() {
   requestAnimationFrame( animate );
  

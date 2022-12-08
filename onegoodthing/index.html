@@ -11,13 +11,28 @@
     <div id="app">
       <canvas id="bg"></canvas>
         <div id="main">
+          <div class="goals">
+            <input type="text">
+            <input type="text" id="yellowNumber" name="yellowNumber">
+            <input type="text" id="greenNumber">
+          </div>
           <div class="buttons">
             <button id="displayStars">display your stars</button>
             <button id="displayNotebook">display your notebook</button>
-            <button id="settings">Settings</button>
+            
+          </div>
+          <div class="popup" onclick="popUp()" style="color:white">Settings
+            <span class="popuptext" id="myPopup">Popup text...</span>
           </div>
         </div>
     </div>
     <script type="module" src="/main.jsx"></script>
+    <script>
+      function popUp() {
+        var popup = document.getElementById("myPopup");
+        console.log("this stupid button is working now");
+        popup.classList.toggle("show");
+      }
+    </script>
   </body>
 </html>
