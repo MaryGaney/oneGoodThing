@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300&family=Raleway:wght@300&display=swap');
+
+/*font-family: 'Hind Siliguri', sans-serif;
+font-family: 'Raleway', sans-serif;
+*/
 #bg{
   position: fixed;
   top: 0;
@@ -7,6 +12,7 @@
 
 #main{
   position:absolute;
+  font-family: 'Hind Siliguri', sans-serif;
   height:auto;
   width:auto;
   z-index:1;
@@ -15,61 +21,135 @@
   right:0;
 }
 
-.popup {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  top:0;
-  left:0;
-}
-/* The actual popup (appears on top) */
-.popup .popuptext {
+#main h1{
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  margin-top:60%;
+  opacity: 100%;
   visibility: hidden;
-  width: 160px;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -80px;
+  text-align:center;
+  font-size:550%;
+  box-shadow: 2px,2px,red;
+
+
 }
-/* Popup arrow */
-.popup .popuptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
+
+
+@keyframes animationName {
+  0%   { opacity:0; }
+  50%  { opacity:1; }
+  100% { opacity:0; }
 }
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
-.popup .show {
+@-o-keyframes animationName{
+  0%   { opacity:0; }
+  50%  { opacity:1; }
+  100% { opacity:0; }
+}
+@-moz-keyframes animationName{
+  0%   { opacity:0; }
+  50%  { opacity:1; }
+  100% { opacity:0; }
+}
+@-webkit-keyframes animationName{
+  0%   { opacity:0; }
+  50%  { opacity:1; }
+  100% { opacity:0; }
+}   
+#main #startButton {
+  font-family: 'Hind Siliguri', sans-serif;
+  opacity:100%;
   visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s
+  letter-spacing: 2px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.25;
+  right: 70%;
+  margin-left: 60%;
+
+   -webkit-animation: animationName 5s infinite;
+   -moz-animation: animationName 5s infinite;
+   -o-animation: animationName 5s infinite;
+    animation: animationName 5s infinite;
+}
+/*goals inputs*/
+#goals{
+  visibility:hidden;
 }
 
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+/* Button used to open the settings form - fixed at the bottom of the page */
+.open-button {
+  font-family: 'Hind Siliguri', sans-serif;
+  opacity:100%;
+  visibility: visible;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.25;
+  margin-left: 90%;
+
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
 }
 
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity:1 ;}
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  margin-bottom: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+  top:10%;
+  border: 3px solid #f1f1f1;
+  border-radius: 5px;
+  z-index: 9;
+  width:30%;
+  height:30%;
 }
-/* the main index page*/
+
+/* Add styles to the form container */
+.form-container {
+  padding: 10px;
+  background-color: white;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: gray;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+/*buttons at the bottom of the main page*/
 .buttons{
   opacity: 75%;
 }
 
-#displayStars {
+#displayStarsGalaxy {
   opacity:100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: .25rem;
@@ -86,6 +166,7 @@
   line-height: 1.25;
 
   margin-left:35%;
+  bottom:0%;
   padding:1%;
 
   transition: all 250ms;
