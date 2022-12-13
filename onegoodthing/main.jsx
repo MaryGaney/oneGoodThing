@@ -140,6 +140,7 @@ function removeObject3D(object3D) {
       if (object3D.material instanceof Array) {
           // for better memory management and performance
           object3D.material.forEach(material => material.dispose());
+          object3D.material.forEach(object3D.length = 0)
       } else {
           // for better memory management and performance
           object3D.material.dispose();
@@ -228,8 +229,17 @@ function addStarOrdered(){
     }
   */
   const starJan = new THREE.Mesh(geometry, material);
-
-
+  const starFeb = new THREE.Mesh(geometry,material);
+  const starMar = new THREE.Mesh(geometry,material);
+  const starApr = new THREE.Mesh(geometry,material);
+  const starMay = new THREE.Mesh(geometry,material);
+  const starJun = new THREE.Mesh(geometry,material);
+  const starJul = new THREE.Mesh(geometry,material);
+  const starAug = new THREE.Mesh(geometry,material);
+  const starSept = new THREE.Mesh(geometry,material);
+  const starOct = new THREE.Mesh(geometry,material);
+  const starNov = new THREE.Mesh(geometry,material);
+  const starDec = new THREE.Mesh(geometry,material);
 
   starJan.position.set(zeros[count],toThirtyOne[count],zeros[count]);
   starFeb.position.set(ones[count], toTwentyNine[count], zeros[count]);
@@ -256,7 +266,7 @@ function addStarOrdered(){
   scene.add(starOct);
   scene.add(starNov);
   scene.add(starDec);
-
+  count++;
 }
 
 
@@ -283,18 +293,21 @@ const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
 
 //this is the array of stars that need to be added to the scene
 let monthStarArrayOriginal = [];
+console.log(monthStarArrayOriginal.length)
 
 function createMonthStar(monthStarArray){
-  for(let monthName = 0; monthName < Months.length; monthName++){
-    console.log("does this even repeat??");
-    for(let monthDayNumber = 0; monthDayNumber < Months[monthName].length; monthDayNumber++){
-      Months[monthName[monthDayNumber]] = new THREE.Mesh(geometry, material);
+  while(monthStarArray < 364){
+    for(let monthName = 0; monthName < Months.length; monthName++){
+      //console.log("does this even repeat??");
+      for(let monthDayNumber = 0; monthDayNumber < Months[monthName].length; monthDayNumber++){
+        Months[monthName[monthDayNumber]] = new THREE.Mesh(geometry, material);
 
-      monthStarArray.push(Months[monthName[monthDayNumber]]);
-      console.log("see if this works");
+        monthStarArray.push(Months[monthName[monthDayNumber]]);
+        //console.log("see if this works");
+      }
+      console.log(monthStarArray);
+
     }
-    console.log(monthStarArray);
-
   }
   return monthStarArray;
 }
@@ -310,7 +323,7 @@ function addStarGalaxy(arrayOfMonths){
 
   arrayOfMonths[starGalaxyCount].position.set(x,y,z);
     //console.log("this part is working");
-    scene.add(arrayOfMonths[starGalaxyCount]);
+  scene.add(arrayOfMonths[starGalaxyCount]);
   starGalaxyCount++;
 }
 
@@ -319,17 +332,20 @@ function addStarGalaxyDay(){
 }
 
 function populateStarsOrderedD(){
-addStarGalaxyDay();
+  
 }
 //this function moves the camera and adds the stars to the scene in an array of 12 for the 12 months
 //this handles the galaxy order
 function populateStarsGalaxy(){
- 
+  document.getElementById('goodThing').style.visibility = "hidden";
+  document.getElementById('yellowNumber').style.visibility = "hidden";
+  document.getElementById('greenNumber').style.visibility = "hidden";
   camera.position.setZ(-40);
   camera.position.setY(20);
   camera.position.setX(3);
   camera.lookAt(-2,1,1);
   console.log("it's working");
+  createMonthStar(monthStarArrayOriginal);
   for(let x = 0; x < monthStarArrayOriginal.length; x++){
     Array(12).fill(addStarGalaxy(monthStarArrayOriginal));
   }
@@ -337,31 +353,55 @@ function populateStarsGalaxy(){
 
 //this function moves the camera and adds the stars to the scene in an array of 12 for the 12 months
 //this handles the calendar order
-function populateStarsOrdered(){
-  
-  
+function  populateStarsOrdered(){
+  //monthStarArrayOriginal.length = 0;
   createMonthStar(monthStarArrayOriginal);
   camera.position.setZ(-40);
   camera.position.setY(20);
   camera.position.setX(3);
   camera.lookAt(-2,1,1);
   console.log("it's working");
-  let allTheStars = Array(12).fill().forEach(addStarOrdered);
+  Array(12).fill().forEach(addStarOrdered);
 }
+
+const goodThing = [];
+const yellowNumbers = [];
+const greenNumbers = [];
 
 function getTheInfo(){
   const goals = document.getElementById('goals');
   goals.style.visibility = "visible";
+  goals.style.marginBottom = "15%";
+  goals.style.marginLeft = "25%";
+  goals.style.marginTop = "30%";
+  goals.style.height = "15%";
+  goals.style.width = "35%";
+  document.getElementById('goodThing').style.visibility = "visible";
+  document.getElementById('yellowNumber').style.visibility = "visible";
+  document.getElementById('greenNumber').style.visibility = "visible";
+
+  //goodThing
+  //yellowNumber
+  //greenNumber
+
+  const goodThingText = document.getElementById('goodThing');
+
+  const yellowNumber = document.getElementById('yellowNumber');
+
+  const greenNumber = document.getElementById('greenNumber');
+
+
 }
 
 //this function moves the camera, moves the light, and adds a new loader which will add the notebook
 
 function loadNotebook(){
-  for (let i=0; i< 364; i++){
+  
+  for (let i=0; i< monthStarArrayOriginal.length; i++){
     removeObject3D(monthStarArrayOriginal[i]);
   }
   
-  createMonthStar(monthStarArrayOriginal);
+  //createMonthStar(monthStarArrayOriginal);
   const loader = new GLTFLoader();
   pointLight.position.set(2.5,4,-1);
   pointLight.castShadow = true;
@@ -370,16 +410,25 @@ function loadNotebook(){
   camera.position.setX(-1);
   camera.lookAt(0,0,0);
 
+  
+  const goals = document.getElementById('goals');
+
+
+  const mainDiv = document.getElementById('main');
+  mainDiv.visibility = "visible";
+  mainDiv.style.height = "auto";
+
   getTheInfo()
+  /*
+    loader.load( 'book.glb', function ( bookLayout) {
+      scene.add( bookLayout.scene );
+    
 
-  loader.load( 'book.glb', function ( bookLayout) {
-    scene.add( bookLayout.scene );
-  
-
-  
-  }, undefined, function(error){
-    console.log("error: ",error);
-  }); 
+    
+    }, undefined, function(error){
+      console.log("error: ",error);
+    }); 
+  */
 }
 //these are the two variables for the "display my stars" and "display my notebook" button
 
@@ -432,7 +481,7 @@ function resetEverything(){
     removeObject3D(monthStarArrayOriginal[i]);
   }
   
-  createMonthStar(monthStarArrayOriginal);
+  //createMonthStar(monthStarArrayOriginal);
   const fogColor = 0x000000;
   const fogDensity = 0.00;
   scene.fog = new THREE.FogExp2(fogColor,fogDensity); 
@@ -482,11 +531,19 @@ function starting(){
   controls.autoRotate = true;
   controls.autoRotateSpeed = 1.5;
 
-  populateStarsGalaxy();
   
   const startButton = document.getElementById('startButton');
   startButton.addEventListener('click', resetEverything);
 
+  const goals = document.getElementById('goals');
+  goals.style.padding = 0;
+  goals.style.margin = 0;
+  goals.style.height = 0;
+  goals.style.width = 0;
+
+
+  populateStarsGalaxy();
+  
 }
 
 starting();

@@ -80,9 +80,22 @@ font-family: 'Raleway', sans-serif;
 /*goals inputs*/
 #goals{
   visibility:hidden;
+  width: 40%;
+  margin:5%;
+  margin-left:30%;
+  margin-bottom:15%;
+  font-family: 'Hind Siliguri', sans-serif;
+  
 }
 
-/* Button used to open the settings form - fixed at the bottom of the page */
+.inputGoals{
+  padding: 4%;
+  margin:3%;
+  width: 120%;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* settings button */
 .open-button {
   font-family: 'Hind Siliguri', sans-serif;
   opacity:100%;
@@ -93,7 +106,7 @@ font-family: 'Raleway', sans-serif;
   border: none;
   color: white;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
   cursor: pointer;
   line-height: 1.25;
@@ -110,43 +123,73 @@ font-family: 'Raleway', sans-serif;
 .form-popup {
   display: none;
   position: fixed;
-  margin-bottom: 40%;
-  margin-left: 30%;
-  margin-right: 30%;
-  top:10%;
-  border: 3px solid #f1f1f1;
-  border-radius: 5px;
+  top: 10%;
+  left: 30%;
+  right: 30%;
+  bottom: 10%;
+  border-radius: 10%;
   z-index: 9;
-  width:30%;
-  height:30%;
+  height: 300px;
+  width: 40%;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Add styles to the form container */
 .form-container {
-  padding: 10px;
+  opacity: 75%;
   background-color: white;
+}
+
+.form-container button{
+  font-family: 'Hind Siliguri', sans-serif;
+  opacity:100%;
+  visibility: visible;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.25;
+  text-align:center;
+  align-content: center;
+
+
+  transition:all 250ms;
+  user-select: none;
+  -webkit-user-select:auto;
+  touch-action: manipulation;
+  vertical-align: baseline;
+
 }
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
   background-color: gray;
   color: white;
-  padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom:3%;
   opacity: 0.8;
+  margin-top: 3%;
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+.form-container .open-button:hover {
+  opacity: 75%;
+}
+.form-container button:hover{
+  opacity:50%;
 }
 
 /*buttons at the bottom of the main page*/
 .buttons{
-  opacity: 75%;
+  opacity: 60%;
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 #displayStarsGalaxy {

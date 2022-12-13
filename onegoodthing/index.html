@@ -13,12 +13,13 @@
     <div id="app">
       <canvas id="bg" ></canvas>
         <div id="main">
+
           <h1 id="title">ONE GOOD THING</h1>
           <button class="startButton" id="startButton">Click To Proceed →</button>
           <div class="goals" id="goals">
-            <input type="text" id="goodThing">
-            <input type="text" id="yellowNumber" name="yellowNumber">
-            <input type="text" id="greenNumber">
+            <input class="inputGoals" type="text" id="goodThing" placeholder="One Good Thing That Happened To You Today">
+            <input class="inputGoals" type="number" id="yellowNumber" name="yellowNumber" placeholder="Goals Partially Completed Today">
+            <input class="inputGoals" type="number" id="greenNumber" placeholder = "Goals Completed Today">
           </div>
           <div class="buttons" id="mainButtons">
             <button id="displayStarsGalaxy">display your stars</button>
@@ -29,18 +30,18 @@
           <button id="settingsButton" class="open-button" onclick="openForm()">Settings</button>
           <div class="form-popup" id="myForm">
             <form action="/action_page.php" class="form-container">
-              <h1>Settings</h1>
-              <p>Click to display in 365 calendar</p>
-              <p style="font-size:10px">the default is viewing 365 days in galaxy view</p>
+       
+              <p style="font-size:28px; text-align:center;">Click to display in 365 calendar</p>
+              <p style="font-size:14px; text-align:center;">(the default is viewing 365 days in galaxy view)</p>
               <!-- Originally these were supposed to be switches but
               I decided that it wasn't worth spending 2 hours messing with
               checkboxes that weren't working so I decided to make them buttons instead ¯\_(ツ)_/¯
              -->
               <button id="displayStarsCalendar">display your stars</button>
-              <p>click to display in 365 calendar, one day at a time!</p>
+              <p style="font-size:14px; text-align:center;">(click to display in 365 view, collect stars one day at a time!)</p>
               <button id="displayStarsCalendarDay">display your stars</button>
-              <p>click to display in galaxy calendar, one day at a time!</p>
-              <button id="displayStarsGalaxyDay">disply your stars!</button>
+              <p style="font-size:14px; text-align:center;">(click to display in galaxy view, collect stars one day at a time!)</p>
+              <button id="displayStarsGalaxyDay">display your stars!</button>
 
 
               <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
@@ -52,10 +53,14 @@
     <script>
       function openForm() {
         document.getElementById("myForm").style.display = "block";
+        document.getElementById("displayStarsGalaxy").style.visibility = "hidden";
+        document.getElementById("displayNotebook").style.visibility = "hidden";
       }
 
       function closeForm() {
         document.getElementById("myForm").style.display = "none";
+        document.getElementById("displayStarsGalaxy").style.visibility = "visible";
+        document.getElementById("displayNotebook").style.visibility = "visible";        
       }
 
     </script>
